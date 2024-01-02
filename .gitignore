@@ -1,0 +1,13 @@
+# Json files
+*.json
+!template.json
+
+# HTML files
+*.html
+
+# Python files
+/src/files/*.py
+/packages/__pycache__
+
+# DS_Store
+.DS_Store
