@@ -4,14 +4,14 @@
 #
 ################################################################################
 # Libraries
-import packages.request     as SR
-import packages.Collection  as SC
+import src.packages.request     as SR
+import src.packages.Collection  as SC
 
 # main
 def main():
     request     = SR.request()
     collection  = SC.collection()
-    
+
     collection.getCollection()
     collection.getEnvironment()
     
@@ -25,11 +25,11 @@ def main():
     request.set_options(
         [
             ["e", ""]   ,
-            ["n", "2"]  ,
+            ["n", "1"]  ,
             ["x", ""]   ,
             ["html", ""],
             # To test error pop up
-            # ["TTT", ""]
+            #["TTT", ""]
         ]
     )
     

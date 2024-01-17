@@ -1,17 +1,16 @@
 ###############################################################################################################
 # script:       request.py
 # description:  This script send the request to the server and analize the response
-# version:      1.1
+# version:      1.2
 # creation:     December 2, 2023
-# update:       January 2, 2023
+# update:       January 10, 2023
 ###############################################################################################################
 # Library/(ies)
-import requests
 import os
 import threading
 import subprocess
 import time
-import packages.error as error
+import src.packages.error as error
 
 OPTIONS = {
     "e"    : " -e ",                                      # environment
@@ -29,9 +28,9 @@ class request:
     def __init__(self):
         self.path        = os.getcwd();
         self.command     = "newman run"
-        self.collection  = self.path + "/src/collection"
-        self.environment = self.path + "/src/environment"
-        self.reports     = self.path + "/reports/"
+        self.collection  = self.path
+        self.environment = self.path
+        self.reports     = ""
         self.options     = []
         self.report      = False
     
@@ -48,12 +47,16 @@ class request:
     def build_request(self):
         try:
             self.command = "newman run " + self.collection
+            try:
+                index = self.options.index(["e",""])
+                self.options[index][1] = self.environment
+            except:
+                self.options.insert(0, ["e", self.environment])    
             for option in self.options:
                 if(option[0] == "html"):
+                    self.get_report_path()
                     option[1] = OPTIONS[option[0]] + self.reports
                     self.report = True
-                if(option[0] == "e"):
-                    option[1] = self.environment
                 self.command = self.command + OPTIONS[option[0]] + option[1]
         except:
             error.popup_showerror("9")
@@ -62,6 +65,7 @@ class request:
         if(self.report):
             self.request_threads()
             self.report_threads()
+            self.report = False
         else:
             self.request_threads()
     
@@ -107,3 +111,16 @@ class request:
             return last_file
         else:
             return ["6"]    
+        
+    def get_report_path(self):
+        path = self.path.split("/")
+        try:
+            if(path[-1] == "Automation-API-Testing"):
+                self.reports = self.path + "/reports/"
+            elif(len(self.reports) == 0):
+                index = path.index("Automation-API-Testing")
+                for i in range (0, index + 1):
+                    self.reports = self.reports + '/' + path[i]
+                self.reports = self.reports + '/'
+        except:
+            return ["10"]

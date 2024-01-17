@@ -1,9 +1,9 @@
 ###############################################################################################################
 # script:       Collection.py
 # description:  This script read a given postman collection to get the APIs and its information
-# version:      1.1
+# version:      1.2
 # creation:     December 2, 2023
-# update:       December 27, 2023
+# update:       January 16, 2023
 ###############################################################################################################
 # Library/ies
 import json
@@ -11,8 +11,8 @@ import shutil
 from os import listdir
 from os.path import isfile, join
 
-import packages.finder as finder
-import packages.printData as printData
+import src.packages.finder as finder
+import src.packages.printData as printData
 # Class
 class collection:
     # Constructor
@@ -27,7 +27,7 @@ class collection:
     # Method(s)    
     def getEnvironment(self):
         # Open a file finder to upload the environment file
-        self.environment = finder.search()
+        self.environment = finder.search("environment")
         # Validate the environment as a file and its content
         if(validateEnvironment(self.environment) == False):
             # It returns the error 2, it can be read in the error.py 
@@ -35,7 +35,7 @@ class collection:
             
     def getCollection(self):
         # Open a file finder to upload the environment file
-        self.collection = finder.search()
+        self.collection = finder.search("collection")
         # Validate the environment as a file and its content
         if(validateEnvironment(self.collection) == False):
             # It returns the error 2, it can be read in the error.py 
@@ -52,7 +52,6 @@ class collection:
             origin_path = "../src/collection"
             # Give a list of all files on the path
             files = [arch for arch in listdir(origin_path) if isfile(join(origin_path, arch))]
-            collections = []
             # Iterate on every file in files
             for file in files:
                 # The file must be different to 'template.json'

@@ -7,7 +7,7 @@
 
 # Python files
 /src/files/*.py
-/packages/__pycache__
+/src/packages/__pycache__
 
 # DS_Store
 .DS_Store
