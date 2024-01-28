@@ -1,9 +1,9 @@
 ###############################################################################################################
 # script:       request.py
 # description:  This script send the request to the server and analize the response
-# version:      1.2
+# version:      1.3
 # creation:     December 2, 2023
-# update:       January 10, 2023
+# update:       January 27, 2023
 ###############################################################################################################
 # Library/(ies)
 import os
@@ -13,15 +13,16 @@ import time
 import src.packages.error as error
 
 OPTIONS = {
-    "e"    : " -e ",                                      # environment
-    "n"    : " -n ",                                      # iterations
-    "tr"   : " --timeout-request ",                       # the time (in milliseconds) to wait for requests to return a response
-    "ts"   : " --timeout-script ",                        # the time (in milliseconds) to wait for scripts to return a response
-    "d"    : " -d ",                                      # specific csv or json
-    "x"    : " -x ",                                      # do not care if the tests fails
-    "k"    : " -k ",                                      # disable SSL
-    "f"    : " --folder ",                                # specific folder
-    "html" : " -r htmlextra --reporter-htmlextra-export " # html report
+    "e"    : " -e ",                                       # environment
+    "n"    : " -n ",                                       # iterations
+    "tr"   : " --timeout-request ",                        # the time (in milliseconds) to wait for requests to return a response
+    "ts"   : " --timeout-script ",                         # the time (in milliseconds) to wait for scripts to return a response
+    "d"    : " -d ",                                       # specific csv or json
+    "x"    : " -x ",                                       # do not care if the tests fails
+    "k"    : " -k ",                                       # disable SSL
+    "f"    : " --folder ",                                 # specific folder
+    "html" : " -r htmlextra --reporter-htmlextra-export ", # html report
+    "r"    : "-r"                                          # terminal report
 }
 
 class request:
@@ -43,6 +44,9 @@ class request:
     def set_options(self, options):
         # it must be ["option", "value"]
         self.options = options
+        
+    def build_options(self, key, value=''):
+        self.options.append([key,value])
                 
     def build_request(self):
         try:
@@ -60,6 +64,9 @@ class request:
                 self.command = self.command + OPTIONS[option[0]] + option[1]
         except:
             error.popup_showerror("9")
+    
+    def print_command(self):
+        return self.command
     
     def send_request(self):
         if(self.report):
