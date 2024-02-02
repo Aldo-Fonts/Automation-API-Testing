@@ -22,7 +22,7 @@ OPTIONS = {
     "k"    : " -k ",                                       # disable SSL
     "f"    : " --folder ",                                 # specific folder
     "html" : " -r htmlextra --reporter-htmlextra-export ", # html report
-    "r"    : "-r"                                          # terminal report
+    "r"    : " -r "                                          # terminal report
 }
 
 class request:
@@ -59,7 +59,7 @@ class request:
             for option in self.options:
                 if(option[0] == "html"):
                     self.get_report_path()
-                    option[1] = OPTIONS[option[0]] + self.reports
+                    option[1] = self.reports
                     self.report = True
                 self.command = self.command + OPTIONS[option[0]] + option[1]
         except:

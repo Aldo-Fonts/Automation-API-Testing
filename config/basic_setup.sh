@@ -17,6 +17,9 @@ brew install python@3.11
 # Python behave installation
 pip3 install behave
 
-# Optional
+# Optional 
 pip3 install tkinter
 pip3 install requests
+
+# Tkinter for Linux
+sudo apt-get install python3-tk
